@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'foodsrch/main.css' %}" />
+        <!---<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        -->
+
+        <title>Hello, world!</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-2">
+                    <div class="input-group">   
+                        <input list="srch" class="form-control" onkeyup="myFunction()" placeholder="Search . . ." name="srch" id="myInput"/>
+                            <ul id="srch">
+                                <li onclick="additem(this)"><a href="#">Adele</a></li>
+                                <li onclick="additem(this)"><a href="#">Agnes</a></li>
+                              
+                                <li onclick="additem(this)"><a href="#">Billy</a></li>
+                                <li onclick="additem(this)"><a href="#">Bob</a></li>
+                              
+                                <li onclick="additem(this)"><a href="#">Calvin</a></li>
+                                <li onclick="additem(this)"><a href="#">Christina</a></li>
+                                <li onclick="additem(this)"><a class="bottom" href="#">Cindy</a></li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!--Save the items here-->
+            <div class="row" id="all-items">
+                    <div class="col-md-6 offset-md-3">
+                            <table class="table table-borderless table-sm table-hover">
+                                    <tbody id="item-body">
+                                <!--     <tr>
+                                        <th style="width:2px"scope="row"><button type="button" onclick="removefromtable(this)" class="btn btn-dark btn-sm">-</button></th>
+                                        <td>Mark</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row"><button type="button" class="btn btn-dark btn-sm">-</button></th>
+                                        <td>Jacob</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row"><button type="button" class="btn btn-dark btn-sm">-</button></th>
+                                        <td colspan="2">Larry the Bird</td>
+                                      </tr>
+                                    </tbody>-->
+                                  </table>
+                    </div>
+            </div>
+
+            <!--Find botton-->
+            <div class="row" style="margin-top:15rem">
+                    <div class="col-md-6 offset-md-3">
+                        <button type="button" class="btn btn-danger btn-lg btn-block">Find Me Recipes</button>    
+                    </div>
+            </div>
+        </div>
+
+        <script>
+
+                var allitems=[];
+
+                //Delete the things on pressing escape
+                document.onkeydown = function(evt) {
+                    evt = evt || window.event;
+                    if (evt.keyCode == 27) {
+                        input = document.getElementById("myInput");
+                        input.value="";
+                    }
+                };
+
+                function myFunction() {
+                    
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("srch");
+                    li = ul.getElementsByTagName("li");
+
+                    //If there is no text, dont show anything
+                    if(filter.length === 0){
+                        console.log("shit");
+                        ul.style.display="none";
+                    }
+                    else{ // show things
+                        ul.style.display="inline";
+                    }   
+                    
+
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+
+                //function to add to the table;
+                function additem(item){
+                    if(allitems.includes(item.innerText)){
+                        console.log("already there");
+                    }
+                    else{
+                        allitems.push(item.innerText);
+                        console.log(allitems);
+                        addtotable(item.innerText);
+                    }
+                }
+
+                function addtotable(addedItem){
+                    var table,items;
+                    table = document.getElementById("item-body");
+                    items = table.innerHTML+ '<tr> <th scope="row"><button type="button" class="btn btn-dark btn-sm" onclick="removefromtable(this)">-</button></th><td colspan="2">'+addedItem+'</td></tr>';
+                    table.innerHTML=items;
+                }
+
+                function removefromtable(item){
+                   // var I = allitems.indexOf()
+                    var tableRow= item.parentElement.parentElement;
+                    var content = tableRow.children[1].innerText;
+                    
+                    var table;
+                    table = document.getElementById("item-body");
+
+                    if(allitems.includes(content)){
+                        // remove
+                        var i = allitems.indexOf(content);
+                        console.log(i);
+                        allitems.splice(i,1);
+                        tableRow.parentNode.removeChild(tableRow);
+                    }
+                    console.log(allitems);
+                }
+
+                </script>
+    </body>
+</html>
+
+<!--<a href="#" class="search_icon"><i class="fas fa-search"></i></a>-->

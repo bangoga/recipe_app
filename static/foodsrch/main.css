@@ -1,0 +1,79 @@
+.form-control {
+  padding: 0px 10px 0 20px;
+  margin-top: 10px;
+  font-size: 20px;
+  font-weight: 400;
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  min-height:50px;
+  min-width: 45rem;
+  height: auto;
+  border-radius: 50px 50px  50px 50px !important;
+}
+
+.form-control::placeholder { 
+    color:black;
+    opacity: 0.3; 
+    font-weight: 400;
+    font-size: 20px;
+  }
+
+  .input-group{
+      margin-top:50%;
+  }
+
+  .search_icon{
+    height: 40px;
+    width: 40px;
+    float: right;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    color:black;
+    }
+
+  
+    
+    #srch {
+      /* Remove default list styling */
+      list-style-type: none;
+      padding: 0;
+      margin-top:4rem;
+      display:none;
+      opacity: 0.75;
+      position: fixed;
+      z-index: 100;
+    }
+    
+    #srch li a {
+      border: 1px solid #ddd; /* Add a border to all links */
+      margin-top: -1px; /* Prevent double borders */
+      background-color: #f6f6f6; /* Grey background color */
+      padding: 12px; /* Add some padding */
+      text-decoration: none; /* Remove default text underline */
+      font-size: 18px; /* Increase the font-size */
+      color: black; /* Add a black text color */
+      display: block; /* Make it into a block element to fill the whole list */
+      min-width: 43rem;
+      margin-left:1rem;
+      
+      
+    }
+
+     .bottom{  
+      border-radius: 0px 0px  25px 25px !important;
+    }
+    
+    #srch li a:hover:not(.header) {
+      background-color: #eee; /* Add a hover effect to all links, except for headers */
+    }
+    
+    #all-items{
+      margin-top:2rem; 
+      overflow: auto;
+      max-height:40rem;
+    }
+
+
+  
