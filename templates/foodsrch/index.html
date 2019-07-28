@@ -6,6 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Bootstrap CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+       
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
         {% load staticfiles %}
         <link rel="stylesheet" href="{% static 'foodsrch/main.css' %}" />
         <!---<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -59,7 +61,10 @@
             <!--Find botton-->
             <div class="row" style="margin-top:15rem">
                     <div class="col-md-6 offset-md-3">
-                        <button type="button" class="btn btn-danger btn-lg btn-block">Find Me Recipes</button>    
+                        <form method="POST" class="post-form">{% csrf_token %}
+                            <input type=hidden id="fullValues" name="fullValues" value=""/>
+                            <button type="submit" onclick="sendRequest()" class="btn btn-danger btn-lg btn-block">Find Me Recipes</button> 
+                        </form>   
                     </div>
             </div>
         </div>
@@ -115,7 +120,9 @@
                         allitems.push(item.innerText);
                         console.log(allitems);
                         addtotable(item.innerText);
+                        
                     }
+                    hideAll();
                 }
 
                 function addtotable(addedItem){
@@ -123,8 +130,18 @@
                     table = document.getElementById("item-body");
                     items = table.innerHTML+ '<tr> <th scope="row"><button type="button" class="btn btn-dark btn-sm" onclick="removefromtable(this)">-</button></th><td colspan="2">'+addedItem+'</td></tr>';
                     table.innerHTML=items;
+                    
                 }
 
+                function hideAll(){
+                    ul = document.getElementById("srch");
+                    li = ul.getElementsByTagName("li");
+
+                    for (i = 0; i < li.length; i++) {
+                        li[i].style.display = "none";
+                    }
+                }
+                
                 function removefromtable(item){
                    // var I = allitems.indexOf()
                     var tableRow= item.parentElement.parentElement;
@@ -143,6 +160,21 @@
                     console.log(allitems);
                 }
 
+                // converts and encodes the list to a string that can later be retrieved from local shit. 
+                function convertTostring(){
+                    var final_string="";
+                    for(var i =0;i<allitems.length;i++){
+                        final_string=final_string+allitems[i]+"-";
+                    }
+                    console.log(final_string);
+                    return final_string;
+                }
+
+                function sendRequest(){
+                    var input = convertTostring();
+                    var hdn = document.getElementById("fullValues");
+                    hdn.value=input;
+                }
                 </script>
     </body>
 </html>
