@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+       
+        <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+        {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'foodsrch/main.css' %}" />
+        <!---<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+        -->
+
+        <title>Recipe Find!</title>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 offset-md-2">
+                    <div class="input-group">   
+                        <input list="srch" class="form-control" onkeyup="myFunction()" placeholder="Search . . ." name="srch" id="myInput"/>
+                            <ul id="srch">
+                                <li onclick="additem(this)"><a href="#">Black Pepper</a></li>
+                                <li onclick="additem(this)"><a href="#">Butter</a></li>
+                              
+                                <li onclick="additem(this)"><a href="#">Barbuque Sauce</a></li>
+                                <li onclick="additem(this)"><a href="#">Chilli Peppers</a></li>
+                              
+                                <li onclick="additem(this)"><a href="#">Cheese</a></li>
+                                <li onclick="additem(this)"><a href="#">Garlic</a></li>
+                                <li onclick="additem(this)"><a class="bottom" href="#">Onions</a></li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!--Save the items here-->
+            <div class="row" id="all-items">
+                    <div class="col-md-6 offset-md-3">
+                            <table class="table table-borderless table-sm table-hover">
+                                    <tbody id="item-body">
+                                <!--     <tr>
+                                        <th style="width:2px"scope="row"><button type="button" onclick="removefromtable(this)" class="btn btn-dark btn-sm">-</button></th>
+                                        <td>Mark</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row"><button type="button" class="btn btn-dark btn-sm">-</button></th>
+                                        <td>Jacob</td>
+                                      </tr>
+                                      <tr>
+                                        <th scope="row"><button type="button" class="btn btn-dark btn-sm">-</button></th>
+                                        <td colspan="2">Larry the Bird</td>
+                                      </tr>
+                                    </tbody>-->
+                                  </table>
+                    </div>
+            </div>
+
+            <!--Find botton-->
+            <div class="row" style="margin-top:15rem">
+                    <div class="col-md-6 offset-md-3">
+                        <form method="POST" class="post-form">{% csrf_token %}
+                            <input type=hidden id="fullValues" name="fullValues" value=""/>
+                            <button type="submit" onclick="sendRequest()" class="btn btn-danger btn-lg btn-block">Find Me Recipes</button> 
+                        </form>   
+                    </div>
+            </div>
+        </div>
+
+        <script>
+
+                var allitems=[];
+
+                //Delete the things on pressing escape
+                document.onkeydown = function(evt) {
+                    evt = evt || window.event;
+                    if (evt.keyCode == 27) {
+                        input = document.getElementById("myInput");
+                        input.value="";
+                    }
+                };
+
+                function myFunction() {
+                    
+                    var input, filter, ul, li, a, i, txtValue;
+                    input = document.getElementById("myInput");
+                    filter = input.value.toUpperCase();
+                    ul = document.getElementById("srch");
+                    li = ul.getElementsByTagName("li");
+
+                    //If there is no text, dont show anything
+                    if(filter.length === 0){
+                        console.log("shit");
+                        ul.style.display="none";
+                    }
+                    else{ // show things
+                        ul.style.display="inline";
+                    }   
+                    
+
+                    for (i = 0; i < li.length; i++) {
+                        a = li[i].getElementsByTagName("a")[0];
+                        txtValue = a.textContent || a.innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[i].style.display = "";
+                        } else {
+                            li[i].style.display = "none";
+                        }
+                    }
+                }
+
+                //function to add to the table;
+                function additem(item){
+                    if(allitems.includes(item.innerText)){
+                        console.log("already there");
+                    }
+                    else{
+                        allitems.push(item.innerText);
+                        console.log(allitems);
+                        addtotable(item.innerText);
+                        
+                    }
+                    hideAll();
+                }
+
+                function addtotable(addedItem){
+                    var table,items;
+                    table = document.getElementById("item-body");
+                    items = table.innerHTML+ '<tr> <th scope="row"><button type="button" class="btn btn-dark btn-sm" onclick="removefromtable(this)">-</button></th><td colspan="2">'+addedItem+'</td></tr>';
+                    table.innerHTML=items;
+                    
+                }
+
+                function hideAll(){
+                    ul = document.getElementById("srch");
+                    li = ul.getElementsByTagName("li");
+
+                    for (i = 0; i < li.length; i++) {
+                        li[i].style.display = "none";
+                    }
+                }
+                
+                function removefromtable(item){
+                   // var I = allitems.indexOf()
+                    var tableRow= item.parentElement.parentElement;
+                    var content = tableRow.children[1].innerText;
+                    
+                    var table;
+                    table = document.getElementById("item-body");
+
+                    if(allitems.includes(content)){
+                        // remove
+                        var i = allitems.indexOf(content);
+                        console.log(i);
+                        allitems.splice(i,1);
+                        tableRow.parentNode.removeChild(tableRow);
+                    }
+                    console.log(allitems);
+                }
+
+                // converts and encodes the list to a string that can later be retrieved from local shit. 
+                function convertTostring(){
+                    var final_string="";
+                    for(var i =0;i<allitems.length;i++){
+                        final_string=final_string+allitems[i]+"-";
+                    }
+                    console.log(final_string);
+                    return final_string;
+                }
+
+                function sendRequest(){
+                    var input = convertTostring();
+                    var hdn = document.getElementById("fullValues");
+                    hdn.value=input;
+                }
+                </script>
+    </body>
+</html>
+
+<!--<a href="#" class="search_icon"><i class="fas fa-search"></i></a>-->

@@ -1,79 +1,83 @@
-.form-control {
-  padding: 0px 10px 0 20px;
-  margin-top: 10px;
-  font-size: 20px;
-  font-weight: 400;
-  -webkit-box-shadow: none;
-  box-shadow: none;
-  min-height:50px;
-  min-width: 45rem;
-  height: auto;
-  border-radius: 50px 50px  50px 50px !important;
+
+body {
+  background-color: white;
 }
 
-.form-control::placeholder { 
-    color:black;
-    opacity: 0.3; 
+.sidebar-sticky{
+  position: -webkit-sticky;
+  position: sticky;
+  height:100vh !important
+}
+
+.cust-color{
+  /*background: rgb(2,0,36);
+  background: linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(140,145,171,1) 0%, rgba(255,255,255,1) 100%);*/
+  background-color: #8c91ab;
+  border-right: 1px solid black;
+}
+
+.nav-item{
+    color:#22313f !important;
+    font-size: 16px;
     font-weight: 400;
-    font-size: 20px;
+}
+
+.head-item{
+  color:#22313f !important;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.pageCenter {
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1000px;
+	float: none;
+}
+
+.navbar {
+  height: 100%; 
+  width: 13vw; 
+  position: fixed;
+  z-index: 1;
+  top: 0; 
+  left: 0;
+  background-color: #e30b5d;  
+}
+
+.round-btn{
+  height: 11vh;
+  width:11vh;
+  border-radius: 50%;
+  background-color: #e30b5d;  
+  border: none;
+  padding-left: 2rem;
+  transition: 0.1s ease;
+}
+
+
+.round-btn:hover{
+  padding-left: 3rem;
+  background-color: #e30b5d;
+}
+
+.wrap-it{
+  padding-left:10rem;
+}
+
+.fa{
+  font-size: 2rem;
+}
+
+.toggle{
+  animation: hide-bar 0.5s forwards;
+}
+
+@keyframes hide-bar{
+  from{
+    width:11vh;
   }
-
-  .input-group{
-      margin-top:50%;
+  to{
+    width:0px;
   }
-
-  .search_icon{
-    height: 40px;
-    width: 40px;
-    float: right;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    color:black;
-    }
-
-  
-    
-    #srch {
-      /* Remove default list styling */
-      list-style-type: none;
-      padding: 0;
-      margin-top:4rem;
-      display:none;
-      opacity: 0.75;
-      position: fixed;
-      z-index: 100;
-    }
-    
-    #srch li a {
-      border: 1px solid #ddd; /* Add a border to all links */
-      margin-top: -1px; /* Prevent double borders */
-      background-color: #f6f6f6; /* Grey background color */
-      padding: 12px; /* Add some padding */
-      text-decoration: none; /* Remove default text underline */
-      font-size: 18px; /* Increase the font-size */
-      color: black; /* Add a black text color */
-      display: block; /* Make it into a block element to fill the whole list */
-      min-width: 43rem;
-      margin-left:1rem;
-      
-      
-    }
-
-     .bottom{  
-      border-radius: 0px 0px  25px 25px !important;
-    }
-    
-    #srch li a:hover:not(.header) {
-      background-color: #eee; /* Add a hover effect to all links, except for headers */
-    }
-    
-    #all-items{
-      margin-top:2rem; 
-      overflow: auto;
-      max-height:40rem;
-    }
-
-
-  
+}
